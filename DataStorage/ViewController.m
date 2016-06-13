@@ -120,7 +120,9 @@
 
 //创建数据库
 - (void)createData{
+//     NSString * path = @"/Users/Jason/Desktop/未命名文件夹/Cache.db";
     NSString * path = [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Caches/Cache.db"];
+
     //生成dataBase
     _dataBase = [[FMDatabase alloc] initWithPath:path];
     BOOL ret = [_dataBase open];
@@ -184,16 +186,25 @@
 //删除数据库
 - (void)delete{
     NSFileManager* fileManager=[NSFileManager defaultManager];
+    NSString * path = [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Caches/Cache.db"];
+    
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask, YES);
     
     //文件名
     NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:@"Cache.db"];
-     BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
+    
+    NSLog(@"文件是否存在: %@",[fileManager fileExistsAtPath:path]?@"YES":@"NO");
+    
+     BOOL blHave=[fileManager fileExistsAtPath:uniquePath];
     if (blHave) {
         NSLog(@"有");
+        
     }else{
         NSLog(@"没有");
     }
+    BOOL res=[fileManager removeItemAtPath:uniquePath error:nil];
+    
 }
 
 
